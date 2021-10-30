@@ -31,6 +31,31 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  String equation = '';
+  String result = '';
+
+  buttonPressed(String buttonText){
+      setState(() {
+        if(buttonText == "C"){
+            equation = "0";
+            result = "0";
+        }else if (buttonText == "del"){
+          equation = equation.substring(0,equation.length - 1);
+          if(equation ==""){
+            equation = "0";
+          }
+        }else if (buttonText == "="){
+
+        }else{
+          if(equation == "0"){
+            equation = buttonText;
+          }else{
+            equation = equation + buttonText;
+          }
+        }
+      });
+  }
+
   Widget buildButton(String buttonText , double buttonHeight, Color buttonColor){
      return  Container(
        height: MediaQuery.of(context).size.height  * 0.1 * buttonHeight,
@@ -43,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
                )
            ),
            padding: EdgeInsets.all(16.0),
-           onPressed: null,
+           onPressed: () => buttonPressed(buttonText),
            child: Text(
              buttonText,
              style: TextStyle(
@@ -67,12 +92,12 @@ class _MyHomePageState extends State<MyHomePage> {
           Container(
             alignment: Alignment.centerRight,
             padding: EdgeInsets.fromLTRB(10, 20, 10, 0 ),
-            child: Text("0", style: TextStyle(fontSize: 30),),
+            child: Text(equation, style: TextStyle(fontSize: 30),),
           ),
           Container(
             alignment: Alignment.centerRight,
             padding: EdgeInsets.fromLTRB(10, 30, 10, 0 ),
-            child: Text("0", style: TextStyle(fontSize: 40),),
+            child: Text(result, style: TextStyle(fontSize: 40),),
           ),
           Expanded(child: Divider(),),
           Row(
